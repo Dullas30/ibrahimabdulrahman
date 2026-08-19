@@ -281,8 +281,7 @@ export const projects: Project[] = [
         "Optimized responsiveness",
         "Deployed on Vercel",
       ],
-      results:
-        "Delivered a scalable management interface with improved usability and performance.",
+      results: "Delivered a scalable management interface with improved usability and performance.",
     },
   },
   {
@@ -315,8 +314,7 @@ export const projects: Project[] = [
         "Built reusable components",
         "Optimized responsiveness",
       ],
-      results:
-        "Delivered a professional digital presence that improves trust and accessibility.",
+      results: "Delivered a professional digital presence that improves trust and accessibility.",
     },
   },
   {
@@ -425,16 +423,82 @@ export const projects: Project[] = [
 
 export const skillGroups = [
   {
+    title: "Development",
+    items: ["GitHub", "Visual Studio Code", "Node.js", "npm", "JavaScript", "TypeScript"],
+  },
+  {
     title: "Frontend",
-    items: ["React", "TypeScript", "Next.js", "Vite", "Tailwind CSS", "Framer Motion"],
+    items: [
+      "React",
+      "Vite",
+      "React Native",
+      "HTML5",
+      "CSS3",
+      "Responsive Design",
+      "Component-Based UI",
+      "UI/UX Development",
+    ],
   },
   {
-    title: "Design Tools",
-    items: ["Figma", "Canva", "Branding", "Social media creatives"],
+    title: "Backend & APIs",
+    items: [
+      "Supabase",
+      "REST APIs",
+      "API Integration",
+      "API Keys",
+      "Authentication",
+      "Databases",
+      "Cloud Storage",
+      "Paystack",
+    ],
   },
   {
-    title: "Backend",
-    items: ["Supabase", "REST APIs", "Authentication", "Database workflows", "Row-level security", "Realtime"],
+    title: "Deployment & Cloud Automation",
+    items: [
+      "Vercel",
+      "Cloud Storage",
+      "Workflow Automation",
+      "Deploy Previews",
+      "CI/CD",
+      "Hosting",
+    ],
+  },
+  {
+    title: "AI & Development",
+    items: [
+      "AI-assisted development",
+      "Prompt engineering",
+      "Code generation",
+      "Debugging support",
+      "Workflow acceleration",
+    ],
+  },
+  {
+    title: "Design & Creative",
+    items: [
+      "Figma",
+      "Canva",
+      "UI/UX Design",
+      "Responsive Web Design",
+      "Web Animation",
+      "Interactive Interfaces",
+      "Visual Design",
+      "Landing Page Design",
+    ],
+  },
+  {
+    title: "Cybersecurity",
+    items: [
+      "Wireshark",
+      "Nmap",
+      "John the Ripper",
+      "Aircrack-ng",
+      "Network Analysis",
+      "Network Security",
+      "Vulnerability Assessment",
+      "Security Testing",
+      "Cybersecurity Fundamentals",
+    ],
   },
   {
     title: "Data Analysis",
@@ -469,7 +533,11 @@ export const experiences = [
 
 export const stats = [
   { value: projects.length, suffix: "", label: "Projects shipped" },
-  { value: projects.filter((project) => Boolean(project.live)).length, suffix: "", label: "Live demos" },
+  {
+    value: projects.filter((project) => Boolean(project.live)).length,
+    suffix: "",
+    label: "Live demos",
+  },
   { value: skillGroups.length, suffix: "", label: "Skill areas" },
   { value: experiences.length, suffix: "", label: "Experience roles" },
 ];

@@ -105,45 +105,45 @@ function SkillNode({
     <motion.button
       type="button"
       onClick={onActivate}
-      whileHover={reduce ? undefined : { y: -4, scale: 1.01 }}
-      whileTap={reduce ? undefined : { scale: 0.985 }}
-      className={`group relative flex min-h-[17rem] flex-col overflow-hidden rounded-[1.75rem] border p-5 text-left backdrop-blur transition duration-300 md:p-6 ${
+      whileHover={reduce ? undefined : { y: -3, scale: 1.005 }}
+      whileTap={reduce ? undefined : { scale: 0.99 }}
+      className={`group relative flex min-h-[11.5rem] flex-col overflow-hidden rounded-[1.5rem] border p-4 text-left backdrop-blur transition duration-300 md:min-h-[12.5rem] md:p-5 ${
         active
           ? "border-brand/50 bg-surface-elevated shadow-[0_25px_80px_-40px_var(--brand)]"
           : "border-hairline bg-surface/55 hover:border-brand/30 hover:bg-surface"
       } ${meta.layout}`}
       aria-pressed={active}
     >
-      <div className={`absolute inset-0 bg-gradient-to-br ${meta.accent} opacity-80`} />
+      <div className={`absolute inset-0 bg-gradient-to-br ${meta.accent} opacity-70`} />
       <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.18)_1px,transparent_1px)] [background-size:2.75rem_2.75rem]" />
       <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-brand/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <div className="relative flex items-start justify-between gap-4">
-        <span className="inline-flex items-center gap-2 rounded-full border border-hairline bg-background/35 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-foreground/70">
-          <Icon className="h-3.5 w-3.5 text-brand" />
+        <span className="inline-flex items-center gap-2 rounded-full border border-hairline bg-background/35 px-2.5 py-1 text-[9px] uppercase tracking-[0.22em] text-foreground/70">
+          <Icon className="h-3 w-3 text-brand" />
           {group.title}
         </span>
-        <span className="text-[10px] uppercase tracking-[0.24em] text-foreground/40">
+        <span className="text-[9px] uppercase tracking-[0.24em] text-foreground/40">
           {String(group.items.length).padStart(2, "0")} tools
         </span>
       </div>
 
-      <p className="relative mt-5 max-w-[22ch] text-sm leading-6 text-foreground/68">
+      <p className="relative mt-3.5 max-w-[20ch] text-xs leading-5 text-foreground/66">
         {meta.summary}
       </p>
 
-      <div className="relative mt-5 flex flex-wrap gap-2">
-        {group.items.slice(0, 4).map((item) => (
+      <div className="relative mt-3.5 flex flex-wrap gap-1.5">
+        {group.items.slice(0, 3).map((item) => (
           <span
             key={item}
-            className="rounded-full border border-hairline bg-background/25 px-3 py-1.5 text-[11px] text-foreground/72"
+            className="rounded-full border border-hairline bg-background/25 px-2.5 py-1 text-[10px] text-foreground/72"
           >
             {item}
           </span>
         ))}
       </div>
 
-      <div className="relative mt-auto flex items-center gap-3 pt-6 text-[10px] uppercase tracking-[0.2em] text-foreground/45">
+      <div className="relative mt-auto flex items-center gap-3 pt-4 text-[9px] uppercase tracking-[0.2em] text-foreground/45">
         <span className="h-px flex-1 bg-hairline" />
         <span>{meta.line}</span>
       </div>
@@ -167,31 +167,31 @@ function FocusHub({ group, reduce }: { group: SkillGroup; reduce: boolean }) {
       initial={reduce ? false : "hidden"}
       animate="visible"
       exit="exit"
-      className="relative min-h-[19rem] overflow-hidden rounded-[2rem] border border-brand/25 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--surface-elevated)_88%,transparent),color-mix(in_oklab,var(--surface)_92%,transparent))] p-6 shadow-[0_30px_90px_-45px_var(--brand)] md:min-h-[22rem] md:p-8 xl:col-start-2 xl:row-start-2"
+      className="relative min-h-[13rem] overflow-hidden rounded-[1.75rem] border border-brand/20 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--surface-elevated)_88%,transparent),color-mix(in_oklab,var(--surface)_92%,transparent))] p-4 shadow-[0_22px_60px_-40px_var(--brand)] md:min-h-[14.5rem] md:p-5 xl:col-start-2 xl:row-start-2"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,color-mix(in_oklab,var(--brand)_16%,transparent),transparent_42%),radial-gradient(circle_at_bottom_right,color-mix(in_oklab,var(--brand-glow)_12%,transparent),transparent_40%)]" />
       <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.18)_1px,transparent_1px)] [background-size:3rem_3rem]" />
 
-      <div className="relative flex h-full flex-col justify-between gap-6">
+      <div className="relative flex h-full flex-col justify-between gap-4">
         <div className="flex items-start justify-between gap-4">
           <div className="max-w-xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-brand">
-              <Sparkles className="h-3.5 w-3.5" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-2.5 py-1 text-[9px] uppercase tracking-[0.24em] text-brand">
+              <Sparkles className="h-3 w-3" />
               Tools I Reach For
             </span>
-            <h3 className="mt-4 font-display text-3xl tracking-tight text-balance md:text-5xl">
+            <h3 className="mt-3 font-display text-2xl tracking-tight text-balance md:text-4xl">
               A command center for how I build.
             </h3>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-foreground/70 md:text-base">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-foreground/68 md:text-[15px]">
               {meta.summary}
             </p>
           </div>
 
-          <div className="hidden rounded-2xl border border-hairline bg-background/30 px-4 py-3 text-right backdrop-blur xl:block">
-            <div className="text-[10px] uppercase tracking-[0.22em] text-foreground/45">
+          <div className="hidden rounded-2xl border border-hairline bg-background/30 px-3 py-2.5 text-right backdrop-blur xl:block">
+            <div className="text-[9px] uppercase tracking-[0.22em] text-foreground/45">
               Active cluster
             </div>
-            <div className="mt-2 font-display text-3xl tracking-tight text-foreground">
+            <div className="mt-1.5 font-display text-2xl tracking-tight text-foreground">
               {String(group.items.length).padStart(2, "0")}
             </div>
           </div>
@@ -204,21 +204,21 @@ function FocusHub({ group, reduce }: { group: SkillGroup; reduce: boolean }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: easeOut }}
-            className="relative grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+            className="relative grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3"
           >
             {group.items.map((item) => (
               <span
                 key={item}
-                className="flex items-center justify-between rounded-2xl border border-hairline bg-surface/55 px-4 py-3 text-sm text-foreground/78 backdrop-blur"
+                className="flex items-center justify-between rounded-2xl border border-hairline bg-surface/55 px-3.5 py-2.5 text-[13px] text-foreground/76 backdrop-blur"
               >
                 <span>{item}</span>
-                <Icon className="h-3.5 w-3.5 text-brand/65" />
+                <Icon className="h-3 w-3 text-brand/65" />
               </span>
             ))}
           </motion.div>
         </AnimatePresence>
 
-        <div className="relative flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-foreground/45">
+        <div className="relative flex flex-wrap items-center gap-2 text-[9px] uppercase tracking-[0.24em] text-foreground/45">
           <span className="h-px flex-1 bg-hairline" />
           <span>{meta.line}</span>
           <span className="h-px flex-1 bg-hairline" />
@@ -238,13 +238,13 @@ export function Skills() {
       id="skills"
       eyebrow="Skills"
       title={<>Tools I Reach For.</>}
-      intro="A command-center view of the tools behind my frontend, backend, deployment, design, cloud, automation and security work. Tap any cluster to spotlight it."
+      intro="A compact command-center view of the tools behind my frontend, backend, deployment, design, cloud, automation and security work. Tap any cluster to spotlight it."
     >
-      <div className="relative overflow-hidden rounded-[2rem] border border-hairline bg-surface/40 p-4 md:p-6">
+      <div className="relative overflow-hidden rounded-[2rem] border border-hairline bg-surface/40 p-3 md:p-5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,color-mix(in_oklab,var(--brand)_10%,transparent),transparent_35%),radial-gradient(circle_at_bottom_right,color-mix(in_oklab,var(--brand-glow)_8%,transparent),transparent_32%)]" />
         <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.18)_1px,transparent_1px)] [background-size:3rem_3rem]" />
 
-        <div className="relative grid gap-4 xl:grid-cols-3 xl:grid-rows-3 xl:auto-rows-[minmax(15.5rem,1fr)]">
+        <div className="relative grid gap-3 xl:grid-cols-3 xl:grid-rows-3 xl:auto-rows-[minmax(11rem,auto)]">
           <FocusHub group={active} reduce={reduce} />
 
           {skillGroups.map((group, i) => (

@@ -11,9 +11,6 @@ export function Footer() {
           </span>
           <div>
             <div className="font-display text-lg tracking-tight">Ibrahim Abdulrahman Sardauna</div>
-            <p className="mt-1 text-sm text-foreground/55">
-              © {new Date().getFullYear()} · Designed & built with care.
-            </p>
           </div>
         </div>
         <div className="flex items-center gap-2">

@@ -15,7 +15,9 @@ export function Preloader() {
 
   useEffect(() => {
     setMounted(true);
-    if (reduce || sessionStorage.getItem("intro-seen")) return;
+    if (reduce) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (sessionStorage.getItem("intro-seen")) return;
     sessionStorage.setItem("intro-seen", "1");
     setShow(true);
     document.body.style.overflow = "hidden";

@@ -426,15 +426,15 @@ export const projects: Project[] = [
 export const skillGroups = [
   {
     title: "Frontend",
-    items: ["React", "JavaScript", "HTML", "CSS", "Responsive web design"],
+    items: ["React", "TypeScript", "Next.js", "Vite", "Tailwind CSS", "Framer Motion"],
   },
   {
     title: "Design Tools",
-    items: ["Canva", "Figma", "Branding", "Social media creatives"],
+    items: ["Figma", "Canva", "Branding", "Social media creatives"],
   },
   {
-    title: "Backend Basics",
-    items: ["Supabase", "REST APIs", "Basic backend concepts", "Database workflows"],
+    title: "Backend",
+    items: ["Supabase", "REST APIs", "Authentication", "Database workflows", "Row-level security", "Realtime"],
   },
   {
     title: "Data Analysis",

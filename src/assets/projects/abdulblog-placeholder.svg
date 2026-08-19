@@ -1,0 +1,11 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="750" rx="48" fill="#111111"/>
+  <rect x="48" y="48" width="1104" height="654" rx="36" fill="#1A1A1A" stroke="#525252" stroke-width="2"/>
+  <path d="M395 250H805" stroke="#F5F5F5" stroke-width="12" stroke-linecap="round"/>
+  <path d="M395 310H725" stroke="#A3A3A3" stroke-width="10" stroke-linecap="round"/>
+  <path d="M395 360H760" stroke="#A3A3A3" stroke-width="10" stroke-linecap="round"/>
+  <path d="M395 410H690" stroke="#A3A3A3" stroke-width="10" stroke-linecap="round"/>
+  <rect x="395" y="470" width="250" height="68" rx="18" fill="#22C55E" fill-opacity="0.18"/>
+  <text x="600" y="610" text-anchor="middle" fill="#F5F5F5" font-family="Arial, sans-serif" font-size="56" font-weight="700">ABDULBLOG</text>
+  <text x="600" y="660" text-anchor="middle" fill="#A3A3A3" font-family="Arial, sans-serif" font-size="24">Placeholder Preview</text>
+</svg>

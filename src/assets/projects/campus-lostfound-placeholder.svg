@@ -1,0 +1,9 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="750" rx="48" fill="#07111F"/>
+  <rect x="48" y="48" width="1104" height="654" rx="36" fill="#0F172A" stroke="#0EA5E9" stroke-width="2"/>
+  <path d="M430 480L600 300L770 480H430Z" fill="#38BDF8" fill-opacity="0.15"/>
+  <rect x="520" y="360" width="160" height="120" rx="18" stroke="#67E8F9" stroke-width="12"/>
+  <circle cx="600" cy="420" r="26" fill="#67E8F9" fill-opacity="0.18"/>
+  <text x="600" y="535" text-anchor="middle" fill="#E0F2FE" font-family="Arial, sans-serif" font-size="46" font-weight="700">CAMPUS LOST & FOUND</text>
+  <text x="600" y="585" text-anchor="middle" fill="#7DD3FC" font-family="Arial, sans-serif" font-size="24">Placeholder Preview</text>
+</svg>

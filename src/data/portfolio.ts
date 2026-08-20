@@ -1,5 +1,4 @@
 import type { StaticImageAsset } from "@/lib/asset";
-import campusConnectPreview from "@/assets/projects/campus-connect-preview.png";
 import campusLostFoundPreview from "@/assets/projects/campus-lost-found-preview.png";
 import subUrbanWearsPreview from "@/assets/projects/sub-urban-wears-preview.png";
 import nelcoopPreview from "@/assets/projects/nelcoop-preview.png";
@@ -23,7 +22,6 @@ const img = (
 
 const houseOfFaham = img(houseOfFahamPreview, "house-of-faham-preview.png", "image/png");
 const spamassage = img(spamassagePreview, "spamassage-preview.png", "image/png");
-const campusConnect = img(campusConnectPreview, "campus-connect-preview.png", "image/png");
 const ridewise = img(ridewisePreview, "ridewise-preview.png", "image/png");
 const dconnect = img(dconnectPreview, "dconnect-preview.png", "image/png");
 const pengCollection = img(pengCollectionPreview, "peng-collection-preview.png", "image/png");
@@ -121,38 +119,6 @@ export const projects: Project[] = [
       ],
       results:
         "Booking is now one structured flow instead of a chat thread, and every request arrives complete, consistent and ready to confirm.",
-    },
-  },
-  {
-    slug: "campus-connect",
-    name: "Campus Connect",
-    tagline: "Lost & found platform",
-    year: "2024",
-    description:
-      "A campus lost & found app where students report and recover items with smart matching.",
-    overview:
-      "Campus Connect helps students reunite with lost items. Reports are matched by category, location and description, with real-time updates as items are claimed.",
-    features: [
-      "Lost/found report flow with photos",
-      "Smart matching by category and location",
-      "Authentication and user dashboards",
-      "Real-time status updates",
-    ],
-    stack: ["React", "TypeScript", "Supabase", "Tailwind CSS", "React Query"],
-    image: campusConnect,
-    live: "https://campus-lostbutfound.vercel.app/",
-    caseStudy: {
-      problem:
-        "On a busy campus, lost items disappear into WhatsApp groups and notice boards, so there's no single place to report a loss or check what's been found.",
-      solution:
-        "A dedicated lost & found platform: students file a report in under a minute, and smart matching surfaces likely matches by category, location and description.",
-      process: [
-        "Designed the report flow around speed, with photos, category and location first",
-        "Built matching logic on Supabase with realtime updates as items are claimed",
-        "Added authentication and per-user dashboards to keep claims accountable",
-      ],
-      results:
-        "Students now have one canonical place to report and recover items, and matches surface automatically instead of getting buried in group chats.",
     },
   },
   {

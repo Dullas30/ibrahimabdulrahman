@@ -14,7 +14,7 @@ import { easeOut } from "@/lib/motion";
 const paragraphs = [
   "Hi, I'm Ibrahim Abdulrahman Sardauna, a creative and detail-oriented IT professional with experience in frontend development, graphic design, branding, and digital content creation.",
   "I enjoy combining React, JavaScript, HTML, CSS, Canva and Figma to build engaging digital experiences, marketing materials, and responsive websites that feel polished and useful.",
-  "My background includes a BSc in Cyber Security from Alhikmah University, along with IT support and cybersecurity fundamentals, which helps me approach projects from both technical and creative perspectives.",
+  "My background includes a BSc in Cyber Security , along with IT support and cybersecurity fundamentals, which helps me approach projects from both technical and creative perspectives.",
   "I'm currently expanding my skills in backend basics and data analysis while continuing to build modern web applications.",
 ];
 

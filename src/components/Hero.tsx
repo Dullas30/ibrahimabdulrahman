@@ -113,8 +113,8 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.9, ease: easeOut }}
           className="mt-10 max-w-2xl text-lg leading-relaxed text-foreground/70 text-balance md:text-xl"
         >
-          Ibrahim Abdulrahman Sardauna - turning ideas into functional, user-focused websites and
-          applications.
+          Ibrahim Abdulrahman Sardauna, turning ideas into functional, user-focused websites and
+          applications with an obsessive eye for the details people actually feel.
         </motion.p>
 
         <motion.div

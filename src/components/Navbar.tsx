@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useSpring,
-  useMotionValueEvent,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useScroll, useSpring, useMotionValueEvent, useReducedMotion } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import { Magnetic } from "./motion/Magnetic";
 
@@ -13,6 +7,7 @@ const links = [
   { href: "#about", label: "About", id: "about" },
   { href: "#skills", label: "Skills", id: "skills" },
   { href: "#work", label: "Work", id: "work" },
+  { href: "#writing", label: "Writing", id: "writing" },
   { href: "#experience", label: "Experience", id: "experience" },
   { href: "#contact", label: "Contact", id: "contact" },
 ];

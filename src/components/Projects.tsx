@@ -6,6 +6,29 @@ import { Tilt } from "./motion/Tilt";
 import { projects, type Project } from "@/data/portfolio";
 import { easeInOut, easeOut } from "@/lib/motion";
 
+function ProjectPreview({ project }: { project: Project }) {
+  const fallbackLabel = `${project.name} preview unavailable`;
+
+  return (
+    <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-surface via-background to-surface px-6 text-center">
+      <img
+        src={project.image.url}
+        alt={`${project.name} preview`}
+        loading="eager"
+        decoding="async"
+        onError={(event) => {
+          event.currentTarget.style.display = "none";
+          event.currentTarget.nextElementSibling?.removeAttribute("hidden");
+        }}
+        className="h-full w-full object-contain object-center transition-transform duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-[1.01]"
+      />
+      <span hidden className="text-xs text-foreground/50">
+        {fallbackLabel}
+      </span>
+    </div>
+  );
+}
+
 export function Projects() {
   const reduce = useReducedMotion();
   const [active, setActive] = useState<Project | null>(null);
@@ -88,12 +111,7 @@ export function Projects() {
                       </span>
                     </div>
                     <div className="relative aspect-[2/1] overflow-hidden bg-background">
-                      <img
-                        src={p.image.url}
-                        alt={`${p.name} preview`}
-                        loading="lazy"
-                        className="h-full w-full object-contain object-center transition-transform duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-[1.01]"
-                      />
+                      <ProjectPreview project={p} />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-40" />
                     </div>
                   </div>
@@ -225,12 +243,7 @@ export function Projects() {
                           </span>
                         </div>
                         <div className="relative aspect-[2/1] overflow-hidden bg-background">
-                          <img
-                            src={p.image.url}
-                            alt={`${p.name} preview`}
-                            loading="lazy"
-                            className="h-full w-full object-contain object-center transition-transform duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-[1.01]"
-                          />
+                          <ProjectPreview project={p} />
                           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-40" />
                         </div>
                       </div>

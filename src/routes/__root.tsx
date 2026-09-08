@@ -72,7 +72,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-const TITLE = "Ibrahim Abdulrahman Sardauna - Frontend Developer & IT Professional";
+const TITLE = "Ibrahim Abdulrahman Sardauna, Frontend Developer & IT Professional";
 const DESCRIPTION =
   "Portfolio of Ibrahim Abdulrahman Sardauna, a Frontend Developer and IT Professional building clean, responsive, user-focused websites and applications.";
 

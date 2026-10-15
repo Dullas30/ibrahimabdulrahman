@@ -81,7 +81,7 @@ export function Resume() {
                 </a>
                 <a
                   href={RESUME_URL}
-                  download
+                  download="Ibrahimabdulrahman resume.pdf"
                   aria-disabled={available === null}
                   className="group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 text-sm font-medium text-brand-foreground shadow-[0_10px_40px_-10px_var(--brand)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_50px_-8px_var(--brand)]"
                 >

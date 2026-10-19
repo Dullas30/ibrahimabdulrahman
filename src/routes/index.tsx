@@ -10,7 +10,6 @@ import { Experience } from "@/components/Experience";
 import { Resume } from "@/components/Resume";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { Preloader } from "@/components/Preloader";
 import { CustomCursor } from "@/components/CustomCursor";
 
 const TITLE = "Ibrahim Abdulrahman Sardauna, Frontend Developer & IT Professional";
@@ -37,7 +36,6 @@ function Index() {
   return (
     <MotionConfig reducedMotion="user">
       <div className="min-h-screen bg-background text-foreground">
-        <Preloader />
         <CustomCursor />
         <Navbar />
         <main>

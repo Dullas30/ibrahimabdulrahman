@@ -14,7 +14,7 @@ function ProjectPreview({ project }: { project: Project }) {
       <img
         src={project.image.url}
         alt={`${project.name} preview`}
-        loading="eager"
+        loading="lazy"
         decoding="async"
         onError={(event) => {
           event.currentTarget.style.display = "none";

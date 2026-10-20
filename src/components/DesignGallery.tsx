@@ -1,22 +1,32 @@
 import { useEffect, useState } from "react";
-import { ArrowDown, Image, Layers3, Sparkles } from "lucide-react";
+import { ArrowDown, ChevronDown, Image, Layers3, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Section } from "./Section";
 
 const designDetails: Record<string, { title: string; category: string }> = {
   "equipment-market-final.png": { title: "Equipment Market", category: "Campaign flyer" },
-  "nelgro-final.pdf": { title: "NELGRO", category: "Brand design" },
-  "nelgro-flyer.pdf": { title: "NELGRO", category: "Campaign flyer" },
+  "nelgro-final-page-01.png": { title: "NELGRO Equipment Leasing", category: "Brand campaign" },
+  "nelgro-flyer-page-01.png": { title: "NELGRO Equipment Leasing", category: "Campaign flyer" },
 };
 
 const designImages = Object.entries(
-  import.meta.glob("../assets/designs/*", {
+  import.meta.glob(
+    [
+      "../assets/designs/*.avif",
+      "../assets/designs/*.gif",
+      "../assets/designs/*.jpg",
+      "../assets/designs/*.jpeg",
+      "../assets/designs/*.png",
+      "../assets/designs/*.webp",
+    ],
+    {
     eager: true,
     query: "?url",
     import: "default",
-  }),
+    },
+  ),
 )
-  .filter(([path]) => /\.(avif|gif|jpe?g|png|webp|pdf)$/i.test(path))
+  .filter(([path]) => /\.(avif|gif|jpe?g|png|webp)$/i.test(path))
   .map(([path, url]) => ({
     src: url as string,
     ...designDetails[path.split("/").pop() ?? ""] ?? {
@@ -27,13 +37,14 @@ const designImages = Object.entries(
         .replace(/\b\w/g, (letter) => letter.toUpperCase()),
       category: "Graphic design",
     },
-    isPdf: path.toLowerCase().endsWith(".pdf"),
   }));
 
 /** Displays design assets found in the designs folder with friendly metadata. */
 export function DesignGallery() {
   const reduce = useReducedMotion();
+  const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState<(typeof designImages)[number] | null>(null);
+  const visibleDesigns = showAll ? designImages : designImages.slice(0, 1);
 
   useEffect(() => {
     if (!selected) return;
@@ -61,44 +72,36 @@ export function DesignGallery() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-        className="relative isolate overflow-hidden rounded-[2rem] border border-hairline bg-surface/40 px-6 py-14 text-center sm:px-12 sm:py-20"
+        className="relative isolate overflow-hidden rounded-3xl border border-hairline bg-surface/40 p-4 text-center sm:rounded-[2rem] sm:p-8 md:p-10"
       >
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_0%,color-mix(in_oklab,var(--brand)_13%,transparent),transparent_60%)]" />
         <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:36px_36px]" />
 
         {designImages.length > 0 ? (
-          <div className="grid gap-5 text-left sm:grid-cols-2 lg:grid-cols-3">
-            {designImages.map((design, index) => (
+          <>
+          <div className="grid gap-4 text-left sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+            {visibleDesigns.map((design, index) => (
               <motion.figure
                 key={design.src}
                 initial={reduce ? false : { opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.3) }}
-                className="group overflow-hidden rounded-2xl border border-hairline bg-background/50"
+                className={`group overflow-hidden rounded-2xl border border-hairline bg-background/50 ${!showAll && index === 0 ? "sm:col-span-2 sm:mx-auto sm:w-full sm:max-w-xl lg:col-span-3" : ""}`}
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-                  {design.isPdf ? (
-                    <iframe
-                      src={`${design.src}#page=1&toolbar=0&navpanes=0&scrollbar=0&view=Fit`}
-                      title={`${design.title} front page preview`}
-                      tabIndex={-1}
-                      className="pointer-events-none h-full w-full border-0"
-                    />
-                  ) : (
-                    <img
-                      src={design.src}
-                      alt={`${design.title} design`}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                    />
-                  )}
+                  <img
+                    src={design.src}
+                    alt={`${design.title} design`}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                  />
                   <button
                     type="button"
                     onClick={() => setSelected(design)}
                     aria-label={`View ${design.title} ${design.category.toLowerCase()}`}
-                    className="absolute inset-0 z-10 flex items-end justify-center bg-gradient-to-t from-black/60 via-transparent to-transparent p-5 opacity-0 transition-opacity duration-300 focus-visible:opacity-100 group-hover:opacity-100"
+                    className="absolute inset-0 z-10 flex items-end justify-center bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-100 transition-opacity duration-300 sm:p-5 sm:opacity-0 sm:focus-visible:opacity-100 sm:group-hover:opacity-100"
                   >
                     <span className="rounded-full border border-white/30 bg-black/45 px-4 py-2 text-xs font-medium text-white backdrop-blur-md">
                       View design <span aria-hidden>↗</span>
@@ -115,6 +118,25 @@ export function DesignGallery() {
               </motion.figure>
             ))}
           </div>
+          {designImages.length > 1 && (
+            <div className="mt-5 flex flex-col items-center gap-3 rounded-2xl border border-hairline bg-background/35 px-4 py-5 sm:mt-7 sm:flex-row sm:justify-between sm:px-6">
+              <div className="text-center sm:text-left">
+                <p className="text-sm font-medium text-foreground">{showAll ? "The full collection" : "A first look at the collection"}</p>
+                <p className="mt-1 text-xs leading-relaxed text-foreground/55">
+                  {showAll ? `Showing all ${designImages.length} designs.` : `${designImages.length - 1} more ${designImages.length - 1 === 1 ? "design" : "designs"} to explore.`}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAll((current) => !current)}
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand px-6 text-xs font-semibold uppercase tracking-[0.12em] text-brand-foreground shadow-[0_12px_35px_-16px_var(--brand)] transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
+              >
+                {showAll ? "Show less" : "View all designs"}
+                <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`} />
+              </button>
+            </div>
+          )}
+          </>
         ) : (
           <>
             <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl border border-brand/25 bg-brand/10 text-brand">
@@ -156,7 +178,7 @@ export function DesignGallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelected(null)}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/85 p-4 backdrop-blur-md sm:p-8"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/90 p-2 backdrop-blur-md sm:p-6 md:p-8"
             role="dialog"
             aria-modal="true"
             aria-label={`${selected.title} design preview`}
@@ -166,9 +188,9 @@ export function DesignGallery() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.99 }}
               onClick={(event) => event.stopPropagation()}
-              className="relative flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-hairline bg-surface-elevated shadow-2xl"
+              className="relative flex max-h-[96dvh] w-full max-w-5xl flex-col overflow-hidden rounded-xl border border-hairline bg-surface-elevated shadow-2xl sm:max-h-[92vh] sm:rounded-2xl"
             >
-              <div className="flex items-center justify-between gap-4 border-b border-hairline px-5 py-4">
+              <div className="flex items-center justify-between gap-3 border-b border-hairline px-4 py-3 sm:px-5 sm:py-4">
                 <div>
                   <h3 className="font-display text-xl">{selected.title}</h3>
                   <p className="mt-1 text-xs text-foreground/55">{selected.category}</p>
@@ -181,20 +203,12 @@ export function DesignGallery() {
                   Close <span aria-hidden>×</span>
                 </button>
               </div>
-              <div className="min-h-0 flex-1 overflow-auto bg-background/70 p-3 sm:p-6">
-                {selected.isPdf ? (
-                  <iframe
-                    src={`${selected.src}#toolbar=1&navpanes=0&view=FitH`}
-                    title={`${selected.title} full preview`}
-                    className="h-[72vh] min-h-[420px] w-full border-0 bg-white"
-                  />
-                ) : (
-                  <img
-                    src={selected.src}
-                    alt={`${selected.title} full size design`}
-                    className="mx-auto max-h-[72vh] w-auto max-w-full object-contain"
-                  />
-                )}
+              <div className="min-h-0 flex-1 overflow-auto bg-background/70 p-2 sm:p-6">
+                <img
+                  src={selected.src}
+                  alt={`${selected.title} full size design`}
+                  className="mx-auto max-h-[80dvh] w-auto max-w-full object-contain sm:max-h-[72vh]"
+                />
               </div>
             </motion.div>
           </motion.div>

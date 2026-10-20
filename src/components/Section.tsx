@@ -16,7 +16,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={`relative py-28 md:py-40 ${className}`}>
+    <section id={id} className={`relative py-20 md:py-28 ${className}`}>
       <div className="container-tight">
         {(eyebrow || title || intro) && (
           <motion.div
@@ -24,7 +24,7 @@ export function Section({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-16 max-w-2xl md:mb-20"
+            className="mb-12 max-w-2xl md:mb-16"
           >
             {eyebrow && (
               <div className="mb-5 inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-brand">

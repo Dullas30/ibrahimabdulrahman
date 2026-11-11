@@ -4,9 +4,9 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Section } from "./Section";
 
 const designDetails: Record<string, { title: string; category: string }> = {
-  "equipment-market-final.png": { title: "Equipment Market", category: "Campaign flyer" },
-  "nelgro-final-page-01.png": { title: "NELGRO Equipment Leasing", category: "Brand campaign" },
-  "nelgro-flyer-page-01.png": { title: "NELGRO Equipment Leasing", category: "Campaign flyer" },
+  "equipment-market-final.webp": { title: "Equipment Market", category: "Campaign flyer" },
+  "nelgro-final-page-01.webp": { title: "NELGRO Equipment Leasing", category: "Brand campaign" },
+  "nelgro-flyer-page-01.webp": { title: "NELGRO Equipment Leasing", category: "Campaign flyer" },
 };
 
 const designImages = Object.entries(

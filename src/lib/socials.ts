@@ -5,4 +5,11 @@ export const SOCIALS = {
   twitter: "https://x.com/_dullas_",
 } as const;
 
+/** PDF served from /public — used for "Download CV". Replace public/resume.pdf to update it. */
 export const RESUME_URL = "/resume.pdf";
+
+/**
+ * Live FlowCV share link — used for "View CV" so it always shows the latest
+ * version from FlowCV. Leave empty to fall back to the PDF above.
+ */
+export const RESUME_LIVE_URL = "https://flowcv.com/resume/fq1eblpm8p27";

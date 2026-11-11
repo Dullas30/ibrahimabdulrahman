@@ -1,5 +1,6 @@
 import { useRef, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 /**
  * Magnetic hover — element gently gravitates toward the pointer.
@@ -26,7 +27,7 @@ export function Magnetic({
   return (
     <motion.div
       ref={ref}
-      className={`inline-block ${className}`}
+      className={cn("inline-block", className)}
       style={{ x: sx, y: sy }}
       onMouseMove={(e) => {
         const el = ref.current;

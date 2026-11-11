@@ -1,14 +1,14 @@
 import type { StaticImageAsset } from "@/lib/asset";
-import campusLostFoundPreview from "@/assets/projects/campus-lost-found-preview.png";
-import subUrbanWearsPreview from "@/assets/projects/sub-urban-wears-preview.png";
-import nelcoopPreview from "@/assets/projects/nelcoop-preview.png";
-import ecms1Preview from "@/assets/projects/ecms1-preview.png";
-import ridewisePreview from "@/assets/projects/ridewise-preview.png";
-import dconnectPreview from "@/assets/projects/dconnect-preview.png";
-import houseOfFahamPreview from "@/assets/projects/house-of-faham-preview.png";
-import spamassagePreview from "@/assets/projects/spamassage-preview.png";
-import pengCollectionPreview from "@/assets/projects/peng-collection-preview.png";
-import abdulBlogPreview from "@/assets/projects/abdulblog-preview.png";
+import campusLostFoundPreview from "@/assets/projects/campus-lost-found-preview.webp";
+import subUrbanWearsPreview from "@/assets/projects/sub-urban-wears-preview.webp";
+import nelcoopPreview from "@/assets/projects/nelcoop-preview.webp";
+import ecms1Preview from "@/assets/projects/ecms1-preview.webp";
+import ridewisePreview from "@/assets/projects/ridewise-preview.webp";
+import dconnectPreview from "@/assets/projects/dconnect-preview.webp";
+import houseOfFahamPreview from "@/assets/projects/house-of-faham-preview.webp";
+import spamassagePreview from "@/assets/projects/spamassage-preview.webp";
+import pengCollectionPreview from "@/assets/projects/peng-collection-preview.webp";
+import abdulBlogPreview from "@/assets/projects/abdulblog-preview.webp";
 
 const img = (
   url: string,
@@ -20,20 +20,20 @@ const img = (
   content_type,
 });
 
-const houseOfFaham = img(houseOfFahamPreview, "house-of-faham-preview.png", "image/png");
-const spamassage = img(spamassagePreview, "spamassage-preview.png", "image/png");
-const ridewise = img(ridewisePreview, "ridewise-preview.png", "image/png");
-const dconnect = img(dconnectPreview, "dconnect-preview.png", "image/png");
-const pengCollection = img(pengCollectionPreview, "peng-collection-preview.png", "image/png");
-const ecms1Image = img(ecms1Preview, "ecms1-preview.png", "image/png");
-const nelcoopImage = img(nelcoopPreview, "nelcoop-preview.png", "image/png");
-const subUrbanWearsImage = img(subUrbanWearsPreview, "sub-urban-wears-preview.png", "image/png");
+const houseOfFaham = img(houseOfFahamPreview, "house-of-faham-preview.webp", "image/webp");
+const spamassage = img(spamassagePreview, "spamassage-preview.webp", "image/webp");
+const ridewise = img(ridewisePreview, "ridewise-preview.webp", "image/webp");
+const dconnect = img(dconnectPreview, "dconnect-preview.webp", "image/webp");
+const pengCollection = img(pengCollectionPreview, "peng-collection-preview.webp", "image/webp");
+const ecms1Image = img(ecms1Preview, "ecms1-preview.webp", "image/webp");
+const nelcoopImage = img(nelcoopPreview, "nelcoop-preview.webp", "image/webp");
+const subUrbanWearsImage = img(subUrbanWearsPreview, "sub-urban-wears-preview.webp", "image/webp");
 const campusLostFoundImage = img(
   campusLostFoundPreview,
-  "campus-lost-found-preview.png",
-  "image/png",
+  "campus-lost-found-preview.webp",
+  "image/webp",
 );
-const abdulBlogImage = img(abdulBlogPreview, "abdulblog-preview.png", "image/png");
+const abdulBlogImage = img(abdulBlogPreview, "abdulblog-preview.webp", "image/webp");
 
 export type Project = {
   slug: string;

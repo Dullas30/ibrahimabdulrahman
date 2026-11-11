@@ -64,7 +64,7 @@ export function Contact() {
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <a
               href={`mailto:${SOCIALS.email}`}
-              className="font-display text-2xl tracking-tight text-foreground transition-colors duration-300 hover:text-brand md:text-3xl"
+              className="min-w-0 font-display text-xl tracking-tight text-foreground [overflow-wrap:anywhere] transition-colors duration-300 hover:text-brand sm:text-2xl md:text-3xl"
             >
               {SOCIALS.email}
             </a>
@@ -137,7 +137,7 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: i * 0.06, ease: easeOut }}
-            className="group flex items-center justify-between rounded-2xl border border-hairline bg-surface/50 p-6 backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:border-brand/40 hover:bg-surface"
+            className="group flex min-w-0 items-center justify-between rounded-2xl border border-hairline bg-surface/50 p-6 backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:border-brand/40 hover:bg-surface"
           >
             <div className="flex min-w-0 items-center gap-4">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-hairline bg-background/60 text-foreground/70 transition-colors duration-300 group-hover:text-brand group-hover:border-brand/40">

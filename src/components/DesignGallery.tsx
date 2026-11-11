@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowDown, ChevronLeft, ChevronRight, Image, Layers3, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Section } from "./Section";
+import { MaybeSection } from "./Section";
 
 const designDetails: Record<string, { title: string; category: string }> = {
   "equipment-market-final.webp": { title: "Equipment Market", category: "Campaign flyer" },
@@ -54,7 +54,7 @@ const designImages = Object.entries(
   }));
 
 /** Displays design assets found in the designs folder with friendly metadata. */
-export function DesignGallery() {
+export function DesignGallery({ embedded = false }: { embedded?: boolean } = {}) {
   const reduce = useReducedMotion();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const selected = selectedIndex === null ? null : designImages[selectedIndex];
@@ -104,7 +104,8 @@ export function DesignGallery() {
   }, [selectedIndex, step]);
 
   return (
-    <Section
+    <MaybeSection
+      embedded={embedded}
       id="designs"
       eyebrow="Graphic design"
       title={<>A space for visual ideas.</>}
@@ -312,6 +313,6 @@ export function DesignGallery() {
           </motion.div>
         )}
       </AnimatePresence>
-    </Section>
+    </MaybeSection>
   );
 }

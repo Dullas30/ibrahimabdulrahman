@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Sparkles } from "lucide-react";
-import { Section } from "./Section";
+import { MaybeSection } from "./Section";
 
 type Video = {
   title: string;
@@ -32,7 +32,7 @@ const videos: Video[] = [
   },
 ];
 
-export function VideoShowcase() {
+export function VideoShowcase({ embedded = false }: { embedded?: boolean } = {}) {
   const reduce = useReducedMotion();
   const rowRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -56,7 +56,8 @@ export function VideoShowcase() {
   };
 
   return (
-    <Section
+    <MaybeSection
+      embedded={embedded}
       id="videos"
       eyebrow="AI video"
       title={
@@ -144,6 +145,6 @@ export function VideoShowcase() {
           </div>
         </div>
       )}
-    </Section>
+    </MaybeSection>
   );
 }

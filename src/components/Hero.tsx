@@ -99,8 +99,8 @@ export function Hero() {
           style={{ animationDelay: "0.9s" }}
           className="hero-rise mt-10 max-w-2xl text-lg leading-relaxed text-foreground/70 text-balance md:text-xl"
         >
-          Ibrahim Abdulrahman Sardauna, turning ideas into functional, user-focused websites and
-          applications with an obsessive eye for the details people actually feel.
+          I'm Ibrahim Abdulrahman Sardauna. I build websites, design brand visuals and create
+          AI-powered videos, with an obsessive eye for the details people actually feel.
         </p>
 
         <div
@@ -118,7 +118,8 @@ export function Hero() {
           </Magnetic>
           <Magnetic>
             <a
-              href="#resume"
+              href="/cv.pdf"
+              download="Ibrahim-Abdulrahman-Sardauna-CV.pdf"
               className="group inline-flex h-12 items-center gap-2 rounded-full border border-hairline bg-surface/60 px-7 text-sm font-medium text-foreground backdrop-blur transition-colors duration-300 hover:border-brand/50 hover:bg-surface"
             >
               <Download className="h-4 w-4 transition-transform duration-300 ease-out group-hover:-translate-y-0.5" />

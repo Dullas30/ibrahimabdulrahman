@@ -1,136 +1,92 @@
-import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-  type MotionValue,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "./Section";
 import { CountUp } from "./CountUp";
-import { stats } from "@/data/portfolio";
+import { skillGroups, stats } from "@/data/portfolio";
 import { easeOut } from "@/lib/motion";
 
 const paragraphs = [
-  "Hi, I'm Ibrahim Abdulrahman Sardauna, a creative and detail-oriented IT professional with experience in frontend development, graphic design, branding, and digital content creation.",
-  "I enjoy combining React, JavaScript, HTML, CSS, Canva and Figma to build engaging digital experiences, marketing materials, and responsive websites that feel polished and useful.",
-  "My background includes a BSc in Cyber Security , along with IT support and cybersecurity fundamentals, which helps me approach projects from both technical and creative perspectives.",
-  "I'm currently expanding my skills in backend basics and data analysis while continuing to build modern web applications.",
+  "Hi, I'm Ibrahim Abdulrahman Sardauna. I build responsive websites, design brand visuals and marketing materials, and produce AI-powered promotional videos.",
+  "With a BSc in Cyber Security and hands-on IT support experience, I approach every project from both the technical and the creative side. I also write clear technical documentation, reports and research documents.",
 ];
 
-const manifesto: { t: string; a?: boolean }[] = [
-  { t: "I" }, { t: "turn" }, { t: "ideas" }, { t: "into" }, { t: "functional," },
-  { t: "user-focused", a: true }, { t: "products" }, { t: "-" }, { t: "obsessing" },
-  { t: "over" }, { t: "the" }, { t: "details", a: true }, { t: "most" }, { t: "people" },
-  { t: "never" }, { t: "notice," }, { t: "because" }, { t: "those" }, { t: "are" },
-  { t: "the" }, { t: "ones" }, { t: "people" }, { t: "feel.", a: true },
+const snapshot = [
+  { k: "Focus", v: "Web, Design & AI Video" },
+  { k: "Based", v: "Nigeria" },
+  { k: "Build with", v: "React, JS, HTML, CSS" },
+  { k: "Design in", v: "Canva, Figma, Photoshop" },
 ];
-
-function GlowWord({
-  progress,
-  range,
-  accent,
-  children,
-}: {
-  progress: MotionValue<number>;
-  range: [number, number];
-  accent?: boolean;
-  children: string;
-}) {
-  const reduce = useReducedMotion();
-  const opacity = useTransform(progress, range, [0.13, 1]);
-  return (
-    <motion.span
-      style={{ opacity: reduce ? 1 : opacity }}
-      className={accent ? "font-serif italic font-normal text-brand" : undefined}
-    >
-      {children}{" "}
-    </motion.span>
-  );
-}
 
 export function About() {
-  const manifestoRef = useRef<HTMLParagraphElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: manifestoRef,
-    offset: ["start 0.85", "end 0.45"],
-  });
+  const reveal = (delay = 0) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 18 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: "-60px" },
+          transition: { duration: 0.7, delay, ease: easeOut },
+        };
 
   return (
     <Section id="about" eyebrow="About" title={<>A developer who cares about the details.</>}>
-      {/* Scroll-driven manifesto - words illuminate as you read */}
-      <p
-        ref={manifestoRef}
-        className="mb-20 max-w-4xl font-display text-3xl leading-[1.25] tracking-tight text-balance md:mb-28 md:text-5xl"
-      >
-        {manifesto.map((w, i) => (
-          <GlowWord
-            key={i}
-            progress={scrollYProgress}
-            range={[i / manifesto.length, (i + 1) / manifesto.length]}
-            accent={w.a}
-          >
-            {w.t}
-          </GlowWord>
-        ))}
-      </p>
-
-      {/* Animated stats band */}
-      <motion.dl
-        initial={reduce ? false : { opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.8, ease: easeOut }}
-        className="mb-20 grid grid-cols-2 gap-y-10 border-y border-hairline py-10 md:mb-28 md:grid-cols-4"
-      >
-        {stats.map((s) => (
-          <div key={s.label} className="text-center md:text-left">
-            <dd className="font-display text-4xl tracking-tight text-foreground md:text-5xl">
-              <CountUp to={s.value} suffix={s.suffix} />
-            </dd>
-            <dt className="mt-2 text-[11px] uppercase tracking-[0.2em] text-foreground/50">
-              {s.label}
-            </dt>
+      <div className="grid gap-10 md:grid-cols-5 md:gap-14">
+        <div className="md:col-span-3">
+          <div className="space-y-5 text-lg leading-[1.7] text-foreground/75 md:text-xl">
+            {paragraphs.map((p, i) => (
+              <motion.p key={i} {...reveal(i * 0.08)}>
+                {p}
+              </motion.p>
+            ))}
           </div>
-        ))}
-      </motion.dl>
 
-      <div className="grid gap-12 md:grid-cols-5 md:gap-16">
-        <div className="space-y-6 text-lg leading-[1.75] text-foreground/75 md:col-span-3 md:text-xl md:leading-[1.7]">
-          {paragraphs.map((p, i) => (
-            <motion.p
-              key={i}
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: easeOut }}
-            >
-              {p}
-            </motion.p>
-          ))}
+          {/* Compact skills - every group at a glance */}
+          <motion.dl {...reveal(0.15)} className="mt-10 space-y-4">
+            {skillGroups.map((g) => (
+              <div
+                key={g.title}
+                className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:gap-4"
+              >
+                <dt className="w-32 shrink-0 text-[11px] uppercase tracking-[0.18em] text-brand">
+                  {g.title}
+                </dt>
+                <dd className="flex flex-wrap gap-1.5">
+                  {g.items.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-hairline bg-surface/50 px-3 py-1 text-xs text-foreground/75"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            ))}
+          </motion.dl>
         </div>
-        <motion.aside
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: easeOut }}
-          className="md:col-span-2"
-        >
-          <div className="sticky top-28 rounded-3xl border border-hairline bg-surface/60 p-7 backdrop-blur">
+
+        <motion.aside {...reveal(0.1)} className="md:col-span-2">
+          <div className="rounded-3xl border border-hairline bg-surface/60 p-7 backdrop-blur md:sticky md:top-28">
             <div className="mb-5 text-[11px] uppercase tracking-[0.2em] text-brand">Snapshot</div>
-            <dl className="grid grid-cols-2 gap-x-6 gap-y-7">
-              {[
-                { k: "Focus", v: "Frontend & Design" },
-                { k: "Stack", v: "React, JS, HTML, CSS" },
-                { k: "Also", v: "Canva, Figma, Supabase" },
-                { k: "Based", v: "Nigeria" },
-              ].map(({ k, v }) => (
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-6">
+              {snapshot.map(({ k, v }) => (
                 <div key={k}>
                   <dt className="text-[11px] uppercase tracking-[0.16em] text-foreground/50">
                     {k}
                   </dt>
                   <dd className="mt-1.5 font-medium text-foreground">{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <dl className="mt-7 grid grid-cols-2 gap-y-6 border-t border-hairline pt-6">
+              {stats.map((s) => (
+                <div key={s.label}>
+                  <dd className="font-display text-3xl tracking-tight text-foreground">
+                    <CountUp to={s.value} suffix={s.suffix} />
+                  </dd>
+                  <dt className="mt-1 text-[10px] uppercase tracking-[0.18em] text-foreground/50">
+                    {s.label}
+                  </dt>
                 </div>
               ))}
             </dl>

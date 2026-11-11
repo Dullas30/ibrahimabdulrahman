@@ -3,20 +3,15 @@ import { MotionConfig } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
-import { Skills } from "@/components/Skills";
-import { Projects } from "@/components/Projects";
-import { DesignGallery } from "@/components/DesignGallery";
-import { VideoShowcase } from "@/components/VideoShowcase";
-import { ProjectWriteUps } from "@/components/ProjectWriteUps";
+import { Work } from "@/components/Work";
 import { Experience } from "@/components/Experience";
-import { Resume } from "@/components/Resume";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { CustomCursor } from "@/components/CustomCursor";
 
-const TITLE = "Ibrahim Abdulrahman Sardauna, Frontend Developer & IT Professional";
+const TITLE = "Ibrahim Abdulrahman Sardauna, Frontend Developer, Designer & AI Video Creator";
 const DESCRIPTION =
-  "Portfolio of Ibrahim Abdulrahman Sardauna, a Frontend Developer and IT Professional building clean, responsive, user-focused websites and applications.";
+  "Portfolio of Ibrahim Abdulrahman Sardauna: responsive websites, brand and social media designs, and AI-powered promotional videos.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -42,14 +37,9 @@ function Index() {
         <Navbar />
         <main>
           <Hero />
+          <Work />
           <About />
-          <Skills />
-          <Projects />
-          <DesignGallery />
-          <VideoShowcase />
-          <ProjectWriteUps />
           <Experience />
-          <Resume />
           <Contact />
         </main>
         <Footer />

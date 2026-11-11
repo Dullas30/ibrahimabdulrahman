@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ChevronDown, Github, X } from "lucide-react";
-import { Section } from "./Section";
+import { MaybeSection } from "./Section";
 import { Tilt } from "./motion/Tilt";
 import { projects, type Project } from "@/data/portfolio";
 import { easeInOut, easeOut } from "@/lib/motion";
@@ -29,7 +29,7 @@ function ProjectPreview({ project }: { project: Project }) {
   );
 }
 
-export function Projects() {
+export function Projects({ embedded = false }: { embedded?: boolean } = {}) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState<Project | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -59,7 +59,8 @@ export function Projects() {
   }, [active]);
 
   return (
-    <Section
+    <MaybeSection
+      embedded={embedded}
       id="work"
       eyebrow="Featured work"
       title={<>Selected projects.</>}
@@ -67,8 +68,7 @@ export function Projects() {
     >
       <div className="grid gap-8 md:grid-cols-2 md:gap-10">
         {featuredProjects.map((p, i) => {
-          const featuredClassName =
-            i === 0 ? "md:col-span-2" : "";
+          const featuredClassName = i === 0 ? "md:col-span-2" : "";
 
           return (
             <motion.article
@@ -182,7 +182,9 @@ export function Projects() {
         <div>
           <p className="text-sm font-medium text-foreground">Want to see the full set?</p>
           <p className="mt-1 text-sm text-foreground/65">
-            {showAll ? `Showing all ${orderedProjects.length} projects.` : `Only ${featuredProjects.length} are featured here. The rest are one click away.`}
+            {showAll
+              ? `Showing all ${orderedProjects.length} projects.`
+              : `Only ${featuredProjects.length} are featured here. The rest are one click away.`}
           </p>
         </div>
         <button
@@ -314,7 +316,7 @@ export function Projects() {
       <AnimatePresence>
         {active && <CaseStudyModal project={active} onClose={() => setActive(null)} />}
       </AnimatePresence>
-    </Section>
+    </MaybeSection>
   );
 }
 

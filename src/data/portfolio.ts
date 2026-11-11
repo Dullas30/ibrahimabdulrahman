@@ -394,7 +394,11 @@ export const skillGroups = [
   },
   {
     title: "Design Tools",
-    items: ["Canva", "Figma", "Social media creatives"],
+    items: ["Canva", "Figma", "Adobe Photoshop", "Social media creatives"],
+  },
+  {
+    title: "AI Video",
+    items: ["Google Flow", "Stanley Studio", "Promo videos", "Short-form vertical content"],
   },
   {
     title: "Backend Basics",

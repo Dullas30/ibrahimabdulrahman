@@ -4,13 +4,15 @@ import {
   ArrowUpRight,
   Check,
   Copy,
+  Download,
+  FileText,
   Linkedin,
   Mail,
   MessageCircleMore,
   Twitter,
 } from "lucide-react";
 import { Section } from "./Section";
-import { SOCIALS } from "@/lib/socials";
+import { RESUME_DOWNLOAD_URL, RESUME_LIVE_URL, SOCIALS } from "@/lib/socials";
 import { easeOut } from "@/lib/motion";
 import { Magnetic } from "./motion/Magnetic";
 import { MaskReveal } from "./motion/MaskReveal";
@@ -154,6 +156,43 @@ export function Contact() {
           </motion.a>
         ))}
       </div>
+
+      {/* CV - always the latest version from FlowCV */}
+      <motion.div
+        id="resume"
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.6, ease: easeOut }}
+        className="mt-4 flex flex-col gap-5 rounded-2xl border border-hairline bg-surface/50 p-6 backdrop-blur sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div className="flex items-center gap-4">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-hairline bg-background/60 text-brand">
+            <FileText className="h-[18px] w-[18px]" />
+          </span>
+          <div>
+            <div className="font-medium">My CV</div>
+            <div className="mt-1 text-sm text-foreground/60">Always the latest version.</div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2.5">
+          <a
+            href={RESUME_LIVE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-11 items-center gap-2 rounded-full border border-hairline bg-background/80 px-5 text-sm font-medium transition-colors duration-300 hover:border-brand/50"
+          >
+            <FileText className="h-4 w-4" /> View CV
+          </a>
+          <a
+            href={RESUME_DOWNLOAD_URL}
+            download="Ibrahim-Abdulrahman-Sardauna-CV.pdf"
+            className="inline-flex h-11 items-center gap-2 rounded-full bg-brand px-5 text-sm font-medium text-brand-foreground shadow-[0_10px_40px_-14px_var(--brand)] transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            <Download className="h-4 w-4" /> Download CV
+          </a>
+        </div>
+      </motion.div>
     </Section>
   );
 }

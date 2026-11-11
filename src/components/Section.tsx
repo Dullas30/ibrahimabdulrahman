@@ -38,7 +38,9 @@ export function Section({
               </h2>
             )}
             {intro && (
-              <p className="mt-6 text-base leading-relaxed text-foreground/70 md:text-lg text-balance">{intro}</p>
+              <p className="mt-6 text-base leading-relaxed text-foreground/70 md:text-lg text-balance">
+                {intro}
+              </p>
             )}
           </motion.div>
         )}
@@ -46,4 +48,13 @@ export function Section({
       </div>
     </section>
   );
+}
+
+/** Renders a full Section, or just its children when embedded in another section (e.g. Work tabs). */
+export function MaybeSection({
+  embedded = false,
+  ...props
+}: Parameters<typeof Section>[0] & { embedded?: boolean }) {
+  if (embedded) return <>{props.children}</>;
+  return <Section {...props} />;
 }

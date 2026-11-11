@@ -44,6 +44,34 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+// /cv.pdf always serves the latest CV from FlowCV as a direct download.
+// Cached on Vercel's CDN for an hour (so FlowCV isn't hit on every click),
+// with the static public/resume.pdf as a fallback if FlowCV is unavailable.
+const FLOWCV_PDF_URL = "https://app.flowcv.com/api/public/download_resume?token=fq1eblpm8p27";
+const CV_FILENAME = "Ibrahim-Abdulrahman-Sardauna-CV.pdf";
+
+async function serveLatestCv(request: Request): Promise<Response> {
+  const headers = {
+    "content-type": "application/pdf",
+    "content-disposition": `attachment; filename="${CV_FILENAME}"`,
+    "cache-control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
+  };
+  try {
+    const upstream = await fetch(FLOWCV_PDF_URL, { signal: AbortSignal.timeout(8000) });
+    const type = upstream.headers.get("content-type") ?? "";
+    if (upstream.ok && type.includes("pdf")) {
+      return new Response(await upstream.arrayBuffer(), { status: 200, headers });
+    }
+  } catch (error) {
+    console.error("FlowCV download failed, falling back to resume.pdf", error);
+  }
+  const fallback = await fetch(new URL("/resume.pdf", request.url));
+  return new Response(fallback.body, {
+    status: fallback.status,
+    headers: { ...headers, "cache-control": "public, max-age=0, s-maxage=300" },
+  });
+}
+
 // The portfolio is the same for every visitor, so let Vercel's CDN cache the
 // rendered HTML. Browsers still revalidate (max-age=0); each new deployment
 // clears the CDN cache, so content never goes stale after a push.
@@ -62,6 +90,9 @@ function withEdgeCaching(request: Request, response: Response): Response {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      if (request.method === "GET" && new URL(request.url).pathname === "/cv.pdf") {
+        return await serveLatestCv(request);
+      }
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return withEdgeCaching(request, await normalizeCatastrophicSsrResponse(response));

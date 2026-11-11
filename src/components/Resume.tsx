@@ -1,6 +1,6 @@
 import { Section } from "./Section";
 import { Download, FileClock, FileText } from "lucide-react";
-import { RESUME_LIVE_URL, RESUME_URL } from "@/lib/socials";
+import { RESUME_DOWNLOAD_URL, RESUME_LIVE_URL, RESUME_URL } from "@/lib/socials";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -64,7 +64,7 @@ export function Resume() {
                 {unavailable
                   ? "The PDF hasn't been uploaded yet. In the meantime, feel free to explore the projects and experience below - or reach out directly."
                   : RESUME_LIVE_URL
-                    ? "Always the latest version - opens my live CV, where you can read it or download the PDF."
+                    ? "Always the latest version - read it online or download the PDF."
                     : "A concise overview of my experience, projects and skills - open it in your browser or download a copy."}
               </p>
             </div>
@@ -87,15 +87,8 @@ export function Resume() {
                 </a>
                 {(RESUME_LIVE_URL || available !== false) && (
                   <a
-                    href={RESUME_LIVE_URL || RESUME_URL}
-                    {...(RESUME_LIVE_URL
-                      ? {
-                          target: "_blank",
-                          rel: "noopener noreferrer",
-                          title:
-                            "Opens my live CV on FlowCV - use its Download button for the latest PDF",
-                        }
-                      : { download: "Ibrahimabdulrahman resume.pdf" })}
+                    href={RESUME_LIVE_URL ? RESUME_DOWNLOAD_URL : RESUME_URL}
+                    download="Ibrahim-Abdulrahman-Sardauna-CV.pdf"
                     aria-disabled={!RESUME_LIVE_URL && available === null}
                     className="group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 text-sm font-medium text-brand-foreground shadow-[0_10px_40px_-10px_var(--brand)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_50px_-8px_var(--brand)]"
                   >

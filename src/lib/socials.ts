@@ -13,3 +13,6 @@ export const RESUME_URL = "/resume.pdf";
  * version from FlowCV. Leave empty to fall back to the PDF above.
  */
 export const RESUME_LIVE_URL = "https://flowcv.com/resume/fq1eblpm8p27";
+
+/** Server route that always downloads the latest CV from FlowCV (see src/server.ts). */
+export const RESUME_DOWNLOAD_URL = "/cv.pdf";

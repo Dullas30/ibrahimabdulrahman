@@ -40,13 +40,13 @@ export function Work() {
   return (
     <Section
       id="work"
-      eyebrow="Work"
+      eyebrow="Portfolio"
       title={
         <>
-          Things I've <span className="font-serif italic font-normal text-brand">made.</span>
+          Selected <span className="font-serif italic font-normal text-brand">work.</span>
         </>
       }
-      intro="Websites, brand designs and AI-powered videos - pick a category to explore."
+      intro="Websites, brand designs and AI-powered videos. Choose a category to explore."
     >
       {/* Anchors so #designs and #videos still land here */}
       <span id="designs" className="sr-only" />

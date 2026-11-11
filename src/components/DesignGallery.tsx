@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { ArrowDown, ChevronDown, Image, Layers3, Sparkles } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { ArrowDown, ChevronLeft, ChevronRight, Image, Layers3, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Section } from "./Section";
 
@@ -7,6 +8,14 @@ const designDetails: Record<string, { title: string; category: string }> = {
   "equipment-market-final.webp": { title: "Equipment Market", category: "Campaign flyer" },
   "nelgro-final-page-01.webp": { title: "NELGRO Equipment Leasing", category: "Brand campaign" },
   "nelgro-flyer-page-01.webp": { title: "NELGRO Equipment Leasing", category: "Campaign flyer" },
+  "tgif-equipment-market.webp": { title: "Equipment Market TGIF", category: "Social media post" },
+};
+
+// Slides follow the order of designDetails; any other files go at the end.
+const designOrder = Object.keys(designDetails);
+const orderOf = (path: string) => {
+  const index = designOrder.indexOf(path.split("/").pop() ?? "");
+  return index === -1 ? designOrder.length : index;
 };
 
 const designImages = Object.entries(
@@ -20,45 +29,81 @@ const designImages = Object.entries(
       "../assets/designs/*.webp",
     ],
     {
-    eager: true,
-    query: "?url",
-    import: "default",
+      eager: true,
+      query: "?url",
+      import: "default",
     },
   ),
 )
   .filter(([path]) => /\.(avif|gif|jpe?g|png|webp)$/i.test(path))
+  .sort(([a], [b]) => orderOf(a) - orderOf(b) || a.localeCompare(b))
   .map(([path, url]) => ({
     src: url as string,
-    ...designDetails[path.split("/").pop() ?? ""] ?? {
-      title: (path.split("/").pop()?.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ") ?? "Design")
+    ...(designDetails[path.split("/").pop() ?? ""] ?? {
+      title: (
+        path
+          .split("/")
+          .pop()
+          ?.replace(/\.[^.]+$/, "")
+          .replace(/[-_]+/g, " ") ?? "Design"
+      )
         .replace(/\b(final|draft|v\d+)\b/gi, "")
         .replace(/\s+/g, " ")
         .trim()
         .replace(/\b\w/g, (letter) => letter.toUpperCase()),
       category: "Graphic design",
-    },
+    }),
   }));
 
 /** Displays design assets found in the designs folder with friendly metadata. */
 export function DesignGallery() {
   const reduce = useReducedMotion();
-  const [showAll, setShowAll] = useState(false);
-  const [selected, setSelected] = useState<(typeof designImages)[number] | null>(null);
-  const visibleDesigns = showAll ? designImages : designImages.slice(0, 1);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const selected = selectedIndex === null ? null : designImages[selectedIndex];
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: false });
+  const [current, setCurrent] = useState(0);
+  const [snapCount, setSnapCount] = useState(0);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+
+  const syncCarousel = useCallback(() => {
+    if (!emblaApi) return;
+    setCurrent(emblaApi.selectedScrollSnap());
+    setSnapCount(emblaApi.scrollSnapList().length);
+    setCanPrev(emblaApi.canScrollPrev());
+    setCanNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
 
   useEffect(() => {
-    if (!selected) return;
+    if (!emblaApi) return;
+    syncCarousel();
+    emblaApi.on("select", syncCarousel).on("reInit", syncCarousel);
+    return () => {
+      emblaApi.off("select", syncCarousel).off("reInit", syncCarousel);
+    };
+  }, [emblaApi, syncCarousel]);
+
+  const step = useCallback((delta: number) => {
+    setSelectedIndex((index) =>
+      index === null ? index : (index + delta + designImages.length) % designImages.length,
+    );
+  }, []);
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelected(null);
+      if (event.key === "Escape") setSelectedIndex(null);
+      if (event.key === "ArrowRight") step(1);
+      if (event.key === "ArrowLeft") step(-1);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selected]);
+  }, [selectedIndex, step]);
 
   return (
     <Section
@@ -79,63 +124,94 @@ export function DesignGallery() {
 
         {designImages.length > 0 ? (
           <>
-          <div className="grid gap-4 text-left sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-            {visibleDesigns.map((design, index) => (
-              <motion.figure
-                key={design.src}
-                initial={reduce ? false : { opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.3) }}
-                className={`group overflow-hidden rounded-2xl border border-hairline bg-background/50 ${!showAll && index === 0 ? "sm:col-span-2 sm:mx-auto sm:w-full sm:max-w-xl lg:col-span-3" : ""}`}
-              >
-                <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-                  <img
-                    src={design.src}
-                    alt={`${design.title} design`}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
-                  />
+            <div className="overflow-hidden text-left" ref={emblaRef}>
+              <div className="-ml-4 flex touch-pan-y sm:-ml-5">
+                {designImages.map((design, index) => (
+                  <figure
+                    key={design.src}
+                    className="group min-w-0 shrink-0 grow-0 basis-[85%] pl-4 sm:basis-1/2 sm:pl-5 lg:basis-1/3"
+                    aria-roledescription="slide"
+                    aria-label={`${index + 1} of ${designImages.length}`}
+                  >
+                    <div className="overflow-hidden rounded-2xl border border-hairline bg-background/50">
+                      <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+                        <img
+                          src={design.src}
+                          alt={`${design.title} design`}
+                          loading={index < 3 ? "eager" : "lazy"}
+                          decoding="async"
+                          draggable={false}
+                          className="h-full w-full select-none object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setSelectedIndex(index)}
+                          aria-label={`View ${design.title} ${design.category.toLowerCase()}`}
+                          className="absolute inset-0 z-10 flex items-end justify-center bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-100 transition-opacity duration-300 sm:p-5 sm:opacity-0 sm:focus-visible:opacity-100 sm:group-hover:opacity-100"
+                        >
+                          <span className="rounded-full border border-white/30 bg-black/45 px-4 py-2 text-xs font-medium text-white backdrop-blur-md">
+                            View design <span aria-hidden>↗</span>
+                          </span>
+                        </button>
+                      </div>
+                      <figcaption className="flex items-center justify-between gap-3 px-4 py-4">
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-medium text-foreground/90">
+                            {design.title}
+                          </p>
+                          <p className="mt-1 text-xs text-foreground/50">{design.category}</p>
+                        </div>
+                        <Image className="h-4 w-4 shrink-0 text-brand" aria-hidden />
+                      </figcaption>
+                    </div>
+                  </figure>
+                ))}
+              </div>
+            </div>
+
+            {snapCount > 1 && (
+              <div className="mt-6 flex items-center justify-between gap-4 sm:mt-8">
+                <p className="text-xs text-foreground/55">
+                  <span className="font-medium text-foreground">{designImages.length}</span> designs
+                  · swipe to explore
+                </p>
+                <div className="flex items-center gap-1.5" aria-hidden>
+                  {Array.from({ length: snapCount }, (_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      tabIndex={-1}
+                      onClick={() => emblaApi?.scrollTo(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === current
+                          ? "w-6 bg-brand"
+                          : "w-1.5 bg-foreground/25 hover:bg-foreground/45"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="flex gap-2">
                   <button
                     type="button"
-                    onClick={() => setSelected(design)}
-                    aria-label={`View ${design.title} ${design.category.toLowerCase()}`}
-                    className="absolute inset-0 z-10 flex items-end justify-center bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-100 transition-opacity duration-300 sm:p-5 sm:opacity-0 sm:focus-visible:opacity-100 sm:group-hover:opacity-100"
+                    onClick={() => emblaApi?.scrollPrev()}
+                    disabled={!canPrev}
+                    aria-label="Previous designs"
+                    className="grid h-10 w-10 place-items-center rounded-full border border-hairline bg-background/60 text-foreground/80 transition hover:border-brand/50 hover:text-brand disabled:pointer-events-none disabled:opacity-35"
                   >
-                    <span className="rounded-full border border-white/30 bg-black/45 px-4 py-2 text-xs font-medium text-white backdrop-blur-md">
-                      View design <span aria-hidden>↗</span>
-                    </span>
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => emblaApi?.scrollNext()}
+                    disabled={!canNext}
+                    aria-label="Next designs"
+                    className="grid h-10 w-10 place-items-center rounded-full border border-hairline bg-background/60 text-foreground/80 transition hover:border-brand/50 hover:text-brand disabled:pointer-events-none disabled:opacity-35"
+                  >
+                    <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>
-                <figcaption className="flex items-center justify-between gap-3 px-4 py-4">
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-foreground/90">{design.title}</p>
-                    <p className="mt-1 text-xs text-foreground/50">{design.category}</p>
-                  </div>
-                  <Image className="h-4 w-4 shrink-0 text-brand" aria-hidden />
-                </figcaption>
-              </motion.figure>
-            ))}
-          </div>
-          {designImages.length > 1 && (
-            <div className="mt-5 flex flex-col items-center gap-3 rounded-2xl border border-hairline bg-background/35 px-4 py-5 sm:mt-7 sm:flex-row sm:justify-between sm:px-6">
-              <div className="text-center sm:text-left">
-                <p className="text-sm font-medium text-foreground">{showAll ? "The full collection" : "A first look at the collection"}</p>
-                <p className="mt-1 text-xs leading-relaxed text-foreground/55">
-                  {showAll ? `Showing all ${designImages.length} designs.` : `${designImages.length - 1} more ${designImages.length - 1 === 1 ? "design" : "designs"} to explore.`}
-                </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowAll((current) => !current)}
-                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand px-6 text-xs font-semibold uppercase tracking-[0.12em] text-brand-foreground shadow-[0_12px_35px_-16px_var(--brand)] transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
-              >
-                {showAll ? "Show less" : "View all designs"}
-                <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`} />
-              </button>
-            </div>
-          )}
+            )}
           </>
         ) : (
           <>
@@ -147,8 +223,11 @@ export function DesignGallery() {
               The first collection is on its way.
             </h3>
             <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-foreground/65 sm:text-base">
-              Add image files to <code className="rounded bg-background/70 px-1.5 py-0.5 text-brand">src/assets/designs</code> and
-              they will appear here automatically.
+              Add image files to{" "}
+              <code className="rounded bg-background/70 px-1.5 py-0.5 text-brand">
+                src/assets/designs
+              </code>{" "}
+              and they will appear here automatically.
             </p>
 
             <div className="mx-auto mt-9 flex max-w-md flex-wrap items-center justify-center gap-2">
@@ -177,7 +256,7 @@ export function DesignGallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelected(null)}
+            onClick={() => setSelectedIndex(null)}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-background/90 p-2 backdrop-blur-md sm:p-6 md:p-8"
             role="dialog"
             aria-modal="true"
@@ -197,14 +276,35 @@ export function DesignGallery() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setSelected(null)}
+                  onClick={() => setSelectedIndex(null)}
                   className="rounded-full border border-hairline px-4 py-2 text-xs text-foreground/70 transition hover:border-brand/50 hover:text-foreground"
                 >
                   Close <span aria-hidden>×</span>
                 </button>
               </div>
-              <div className="min-h-0 flex-1 overflow-auto bg-background/70 p-2 sm:p-6">
+              <div className="relative min-h-0 flex-1 overflow-auto bg-background/70 p-2 sm:p-6">
+                {designImages.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => step(-1)}
+                      aria-label="Previous design"
+                      className="absolute left-2 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur transition hover:bg-black/70 sm:left-4"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => step(1)}
+                      aria-label="Next design"
+                      className="absolute right-2 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur transition hover:bg-black/70 sm:right-4"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </>
+                )}
                 <img
+                  key={selected.src}
                   src={selected.src}
                   alt={`${selected.title} full size design`}
                   className="mx-auto max-h-[80dvh] w-auto max-w-full object-contain sm:max-h-[72vh]"

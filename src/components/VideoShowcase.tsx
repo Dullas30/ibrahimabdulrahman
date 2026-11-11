@@ -15,7 +15,7 @@ type Video = {
  * Add a video: drop a compressed .mp4 (720p, +faststart) and a poster image
  * into public/videos, then add an entry here. Order here = order on the page.
  */
-const videos: Video[] = [
+export const videos: Video[] = [
   {
     title: "PropVari — How It Works",
     client: "PropVari",

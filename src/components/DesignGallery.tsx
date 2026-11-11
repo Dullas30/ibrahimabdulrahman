@@ -53,6 +53,9 @@ const designImages = Object.entries(
     }),
   }));
 
+/** Number of designs in the gallery (used by the About stats). */
+export const designCount = designImages.length;
+
 /** Displays design assets found in the designs folder with friendly metadata. */
 export function DesignGallery({ embedded = false }: { embedded?: boolean } = {}) {
   const reduce = useReducedMotion();

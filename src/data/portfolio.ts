@@ -401,6 +401,10 @@ export const skillGroups = [
     items: ["Google Flow", "Stanley Studio", "Promo videos", "Short-form vertical content"],
   },
   {
+    title: "Security & IT",
+    items: ["Network security", "Vulnerability assessment", "Wireshark", "Nmap", "IT support"],
+  },
+  {
     title: "Backend Basics",
     items: ["Supabase", "REST APIs", "Basic backend concepts"],
   },
@@ -436,12 +440,7 @@ export const experiences = [
 ];
 
 export const stats = [
-  { value: projects.length, suffix: "", label: "Projects shipped" },
-  {
-    value: projects.filter((project) => Boolean(project.live)).length,
-    suffix: "",
-    label: "Live demos",
-  },
+  { value: projects.length, suffix: "", label: "Websites built" },
   { value: skillGroups.length, suffix: "", label: "Skill areas" },
-  { value: experiences.length, suffix: "", label: "Experience roles" },
+  { value: experiences.length, suffix: "", label: "Roles" },
 ];

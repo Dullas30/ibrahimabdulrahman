@@ -1,7 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "./Section";
 import { CountUp } from "./CountUp";
-import { skillGroups, stats } from "@/data/portfolio";
+import { experiences, projects, skillGroups } from "@/data/portfolio";
+import { designCount } from "./DesignGallery";
+import { videos } from "./VideoShowcase";
 import { easeOut } from "@/lib/motion";
 
 const paragraphs = [
@@ -14,6 +16,14 @@ const snapshot = [
   { k: "Based", v: "Nigeria" },
   { k: "Build with", v: "React, JS, HTML, CSS" },
   { k: "Design in", v: "Canva, Figma, Photoshop" },
+];
+
+// Counted from the actual content, so these grow as work is added.
+const stats = [
+  { value: projects.length, suffix: "", label: "Websites built" },
+  { value: designCount + videos.length, suffix: "", label: "Designs & videos" },
+  { value: skillGroups.length, suffix: "", label: "Skill areas" },
+  { value: experiences.length, suffix: "", label: "Roles" },
 ];
 
 export function About() {

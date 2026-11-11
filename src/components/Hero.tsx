@@ -8,16 +8,8 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
-import {
-  ArrowRight,
-  Download,
-  Linkedin,
-  Mail,
-  MessageCircleMore,
-  Twitter,
-} from "lucide-react";
+import { ArrowRight, Download, Linkedin, Mail, MessageCircleMore, Twitter } from "lucide-react";
 import { SOCIALS } from "@/lib/socials";
-import { easeOut } from "@/lib/motion";
 import { MaskReveal } from "./motion/MaskReveal";
 import { Magnetic } from "./motion/Magnetic";
 
@@ -59,12 +51,10 @@ export function Hero() {
       }}
     >
       {/* Ambient background */}
-      <motion.div
+      <div
         aria-hidden
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.6, ease: easeOut }}
-        className="pointer-events-none absolute inset-0 -z-10"
+        className="hero-fade pointer-events-none absolute inset-0 -z-10"
+        style={{ animationDuration: "1.6s" }}
       >
         <motion.div className="absolute inset-0 grid-bg" style={{ opacity: gridOpacity }} />
         <motion.div className="absolute inset-0" style={{ backgroundImage: aurora }} />
@@ -73,24 +63,22 @@ export function Hero() {
           <div className="absolute right-[-15%] bottom-[-25%] h-[55vh] w-[55vh] rounded-full bg-brand-glow/18 blur-[140px]" />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
-      </motion.div>
+      </div>
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
         className="container-tight flex flex-col items-center text-center"
       >
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: easeOut }}
-          className="mb-10 inline-flex items-center gap-2.5 rounded-full border border-hairline bg-surface/60 px-4 py-1.5 text-[11px] uppercase tracking-[0.22em] text-foreground/70 backdrop-blur"
+        <div
+          style={{ animationDelay: "0.1s" }}
+          className="hero-rise mb-10 inline-flex items-center gap-2.5 rounded-full border border-hairline bg-surface/60 px-4 py-1.5 text-[11px] uppercase tracking-[0.22em] text-foreground/70 backdrop-blur"
         >
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-70" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
           </span>
           Available for work
-        </motion.div>
+        </div>
 
         <h1 className="font-display text-[clamp(2.9rem,8.5vw,8rem)] leading-[0.98] tracking-tight text-balance">
           <MaskReveal mode="animate" delay={0.25}>
@@ -107,21 +95,17 @@ export function Hero() {
           </MaskReveal>
         </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.9, ease: easeOut }}
-          className="mt-10 max-w-2xl text-lg leading-relaxed text-foreground/70 text-balance md:text-xl"
+        <p
+          style={{ animationDelay: "0.9s" }}
+          className="hero-rise mt-10 max-w-2xl text-lg leading-relaxed text-foreground/70 text-balance md:text-xl"
         >
           Ibrahim Abdulrahman Sardauna, turning ideas into functional, user-focused websites and
           applications with an obsessive eye for the details people actually feel.
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.05, ease: easeOut }}
-          className="mt-12 flex flex-col items-center gap-3 sm:flex-row"
+        <div
+          style={{ animationDelay: "1.05s" }}
+          className="hero-rise mt-12 flex flex-col items-center gap-3 sm:flex-row"
         >
           <Magnetic>
             <a
@@ -141,13 +125,11 @@ export function Hero() {
               Resume
             </a>
           </Magnetic>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.25 }}
-          className="mt-14 flex items-center gap-2"
+        <div
+          style={{ animationDelay: "1.25s" }}
+          className="hero-fade mt-14 flex items-center gap-2"
         >
           {socials.map(({ href, label, Icon }) => (
             <Magnetic key={label} strength={0.5}>
@@ -162,18 +144,15 @@ export function Hero() {
               </a>
             </Magnetic>
           ))}
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* Scroll cue */}
       <motion.a
         href="#about"
         aria-label="Scroll to about section"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.6 }}
-        style={{ opacity: contentOpacity }}
-        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-foreground/45 transition-colors hover:text-foreground/70"
+        style={{ opacity: contentOpacity, animationDelay: "1.6s" }}
+        className="hero-fade absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col sm:flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-foreground/45 transition-colors hover:text-foreground/70"
       >
         Scroll
         <span className="relative h-12 w-px overflow-hidden bg-foreground/15">

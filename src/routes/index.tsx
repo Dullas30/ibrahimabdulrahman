@@ -6,6 +6,7 @@ import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
 import { Projects } from "@/components/Projects";
 import { DesignGallery } from "@/components/DesignGallery";
+import { VideoShowcase } from "@/components/VideoShowcase";
 import { ProjectWriteUps } from "@/components/ProjectWriteUps";
 import { Experience } from "@/components/Experience";
 import { Resume } from "@/components/Resume";
@@ -45,6 +46,7 @@ function Index() {
           <Skills />
           <Projects />
           <DesignGallery />
+          <VideoShowcase />
           <ProjectWriteUps />
           <Experience />
           <Resume />

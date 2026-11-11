@@ -11,6 +11,7 @@ export function Resume() {
   const unavailable = available === false && !RESUME_LIVE_URL;
 
   useEffect(() => {
+    if (RESUME_LIVE_URL) return; // live FlowCV link: no need to check the PDF
     let cancelled = false;
 
     fetch(RESUME_URL, { method: "HEAD" })
@@ -62,7 +63,9 @@ export function Resume() {
               <p className="mt-3 leading-relaxed text-foreground/70">
                 {unavailable
                   ? "The PDF hasn't been uploaded yet. In the meantime, feel free to explore the projects and experience below - or reach out directly."
-                  : "A concise overview of my experience, projects and skills - open it in your browser or download a copy."}
+                  : RESUME_LIVE_URL
+                    ? "Always the latest version - opens my live CV, where you can read it or download the PDF."
+                    : "A concise overview of my experience, projects and skills - open it in your browser or download a copy."}
               </p>
             </div>
           </div>
@@ -82,11 +85,18 @@ export function Resume() {
                 >
                   <FileText className="h-4 w-4" /> View CV
                 </a>
-                {available !== false && (
+                {(RESUME_LIVE_URL || available !== false) && (
                   <a
-                    href={RESUME_URL}
-                    download="Ibrahimabdulrahman resume.pdf"
-                    aria-disabled={available === null}
+                    href={RESUME_LIVE_URL || RESUME_URL}
+                    {...(RESUME_LIVE_URL
+                      ? {
+                          target: "_blank",
+                          rel: "noopener noreferrer",
+                          title:
+                            "Opens my live CV on FlowCV - use its Download button for the latest PDF",
+                        }
+                      : { download: "Ibrahimabdulrahman resume.pdf" })}
+                    aria-disabled={!RESUME_LIVE_URL && available === null}
                     className="group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 text-sm font-medium text-brand-foreground shadow-[0_10px_40px_-10px_var(--brand)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_50px_-8px_var(--brand)]"
                   >
                     <Download className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5" />

@@ -6,8 +6,6 @@ import { Section } from "./Section";
 
 const designDetails: Record<string, { title: string; category: string }> = {
   "equipment-market-final.webp": { title: "Equipment Market", category: "Campaign flyer" },
-  "nelgro-final-page-01.webp": { title: "NELGRO Equipment Leasing", category: "Brand campaign" },
-  "nelgro-flyer-page-01.webp": { title: "NELGRO Equipment Leasing", category: "Campaign flyer" },
   "tgif-equipment-market.webp": { title: "Equipment Market TGIF", category: "Social media post" },
 };
 

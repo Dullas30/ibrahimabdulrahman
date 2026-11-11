@@ -44,12 +44,27 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+// The portfolio is the same for every visitor, so let Vercel's CDN cache the
+// rendered HTML. Browsers still revalidate (max-age=0); each new deployment
+// clears the CDN cache, so content never goes stale after a push.
+const HTML_CACHE_CONTROL = "public, max-age=0, s-maxage=3600, stale-while-revalidate=604800";
+
+function withEdgeCaching(request: Request, response: Response): Response {
+  if (request.method !== "GET" || response.status !== 200) return response;
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.includes("text/html")) return response;
+  if ((response.headers.get("cache-control") ?? "").includes("s-maxage")) return response;
+  const cached = new Response(response.body, response);
+  cached.headers.set("cache-control", HTML_CACHE_CONTROL);
+  return cached;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withEdgeCaching(request, await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

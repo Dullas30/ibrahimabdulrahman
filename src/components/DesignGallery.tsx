@@ -7,6 +7,7 @@ import { MaybeSection } from "./Section";
 const designDetails: Record<string, { title: string; category: string }> = {
   "equipment-market-final.webp": { title: "Equipment Market", category: "Campaign flyer" },
   "tgif-equipment-market.webp": { title: "Equipment Market TGIF", category: "Social media post" },
+  "nelgro-happy-friday.webp": { title: "NELGRO Happy Friday", category: "Social media post" },
 };
 
 // Slides follow the order of designDetails; any other files go at the end.
